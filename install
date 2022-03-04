@@ -1,3 +1,4 @@
 gem install json
 gem install puma
 gem install rails
+gem install tzinfo-data
