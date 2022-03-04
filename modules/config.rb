@@ -1,3 +1,6 @@
+# Configurator class
+# Parses a JSON file and handles empty keys
+
 require 'json'
 
 class Configurator

@@ -1,3 +1,6 @@
+# Server module
+# Webserver logic
+
 require 'socket'
 require_relative 'config'
 
