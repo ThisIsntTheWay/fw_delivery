@@ -1,0 +1,2 @@
+class FirmwareRepository < ApplicationRecord
+end
