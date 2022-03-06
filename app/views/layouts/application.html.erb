@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>DeliveryApp</title>
+    <title>Firmware management</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <script type="text/typescript" src="/typescript/global.ts"></script>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -12,4 +13,6 @@
   <body>
     <%= yield %>
   </body>
+  <script type="text/javascript" src="/helper/typescript.min.js"></script>
+  <script type="text/javascript" src="/helper/typescript.compile.min.js"></script>
 </html>

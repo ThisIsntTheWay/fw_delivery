@@ -1,0 +1,7 @@
+<h1>Repository management</h1>
+
+<% if FirmwareRepository.count > 0 %>
+<% else %>
+<b>No firmware repositories have been set up yet.</b><br>
+<a href="/repository/new">Create new</a>
+<% end %>

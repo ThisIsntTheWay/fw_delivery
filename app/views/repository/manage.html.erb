@@ -1,0 +1,8 @@
+<h1>Repository management</h1>
+<p>Currently selected repository:<br>
+<b>Name:</b> <%= @repository.project %><br>
+<b>Description:</b> <%= @repository.description %><br>
+<b>ID:</b> <%= @repository.id %>
+
+<p><h3>Actions:</h3><p>
+<a href="#" onClick="crudOperation('delete', 'repository', <%= @repository.id %>)">Delete</a>

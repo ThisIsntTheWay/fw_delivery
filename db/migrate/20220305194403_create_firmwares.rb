@@ -1,6 +1,7 @@
 class CreateFirmwares < ActiveRecord::Migration[7.0]
   def change
     create_table :firmwares do |t|
+      t.integer :project_reference
       t.integer :version_number
       t.string :release_type
       t.boolean :for_release

@@ -1,3 +1,4 @@
-<h1>Firmware repository</h1>
-<p>Find me in app/views/firmware/index.html.erb</p>
-<i>URI path: <%= @paramIngress %></i>
+<h1>Firmware management</h1>
+
+Current <a href="/repository">repositories</a>: <%= FirmwareRepository.count %><br>
+Current <a href="/firmware/new">firmware</a> objects: <%= Firmware.count %><br>
