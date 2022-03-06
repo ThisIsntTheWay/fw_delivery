@@ -12,7 +12,7 @@ class FirmwareController < ApplicationController
     
     # Authenticate
     @authCode = "123"
-    if @paramPOST[:authentication] == ""
+    if @paramPOST.nil? || (@paramPOST[:authentication] == "")
       @postContentIsValid = false
       @errorMsg += "Authentication not provided. "
     elsif @paramPOST[:authentication] != @authCode
@@ -26,10 +26,17 @@ class FirmwareController < ApplicationController
       @postContentIsValid = false
       @errorMsg += "param PROJECT is empty. "
     else
-      @forRelease = if @paramPOST[:for_release] == "on" then true else false end
+      @projectID = @paramPOST[:project].to_i
+      if !@projectID
+        @postContentIsValid = false
+        @errorMsg += "param PROJECT must be a number. "
+      elsif !(FirmwareRepository.find(@projectID))
+        @postContentIsValid = false
+        @errorMsg += "param PROJECT references an invalid project. "
+      end
     end
 
-    if !@paramPOST[:version_number].is_a? Numeric
+    if @paramPOST[:version_number].nil?
       @postContentIsValid = false
       @errorMsg += "param VERSION_NUMBER is invalid. "
     end
@@ -44,14 +51,32 @@ class FirmwareController < ApplicationController
     end
   
     # Save to database
+    @verdict = false
     if @postContentIsValid
-      
+      @forRelease = if @paramPOST[:for_release] == "on" then true else false end
+
+      @targetRepository = FirmwareRepository.find(@projectID)
+      puts @targetRepository.id
+      puts "Found repo: #{@projectID.to_s}"
+
+      @result = @targetRepository.firmwares.create(
+        version_number: @paramPOST[:version_number],
+        release_type: @paramPOST[:release_type],
+        for_release: @forRelease,
+        is_hidden: false
+      )
+
+      if @result
+        @verdict = true
+        @verdictMsg = "Firmware registered. ID: #{@result.id}"
+      else
+        @verdictMsg = "Failure during firmware registration."
+      end
     end
 
     # Create response
     begin
-      @verdictMsg = if @postContentIsValid then "Success" else @errorMsg end
-      render :json => { :success => @postContentIsValid, :message => @verdictMsg }, status: if @postContentIsValid then 200 else 400 end
+      render :json => { :success => @verdict, :message => @verdictMsg }, status: if @verdict then 200 else 400 end
     rescue => exception
       render :json => { :success => false, :message => "Unhandled exception encountered.", :exception => exception.to_s }, status: 500
     end

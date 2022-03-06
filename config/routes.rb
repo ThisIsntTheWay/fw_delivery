@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get "/repository", to: "repository#index"
   get "/repository/new", to: "repository#new"
   get "/repository/:id", to: "repository#manage"
+  get "/repository/:id/objects", to: "repository#manage_objects"
 
   # POST
   post "/firmware/create"

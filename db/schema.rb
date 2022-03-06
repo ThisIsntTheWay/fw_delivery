@@ -19,7 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_05_194403) do
   end
 
   create_table "firmwares", force: :cascade do |t|
-    t.integer "project_reference"
+    t.integer "firmware_repository_id"
     t.integer "version_number"
     t.string "release_type"
     t.boolean "for_release"

@@ -11,7 +11,25 @@ class RepositoryController < ApplicationController
     end
   end
 
+  def manage_objects
+    @repository = FirmwareRepository.find(params[:id])
+    if !@repository
+      p "Repository with ID #{params[:id].to_s} does not exist."
+    end
+  end
+
   def delete
+    @authCodeProvided = if !params[:authentication].nil? then params[:authentication][:text] end
+    @authCode = "123"
+
+    if !@authCodeProvided
+      render :json => { :success => false, :message => "Auth code expected." }, status: 403
+      return
+    elsif @authCodeProvided != @authCode
+      render :json => { :success => false, :message => "Auth code invalid" }, status: 403
+      return
+    end
+
     @repository = FirmwareRepository.find(params[:id])
 
     @verdict = true
@@ -19,11 +37,15 @@ class RepositoryController < ApplicationController
 
     if @repository
       begin
-        @repository.delete
+        @id = @repository.id
+        @result = @repository.destroy
+        if @result
+          @verdictMsg = "Repository of ID #{@id} destroyed."
+        end
       rescue => exception
         @verdict = false
         @verdictMsg = "Deletion has failed: #{exception.to_s}"
-      end 
+      end
     else
       @verdict = false
       @verdictMsg = "Respository with ID #{params[:id].to_s} not found."
@@ -69,7 +91,7 @@ class RepositoryController < ApplicationController
         puts "Writing to DB: PROJECT: #{@paramPOST[:project_name]}, DESC: #{@paramPOST[:description]}"
         FirmwareRepository.create(project: @paramPOST[:project_name], description: @paramPOST[:description])
       rescue => exception
-        render :json => { :success => false, :message => "Unhandled exception encountered.", :exception => exception.to_s }, status: 500
+        render :json => { :success => false, :message => "Eexception encountered: ", :exception => exception.to_s }, status: 500
         return
       end
     end

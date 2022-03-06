@@ -3,11 +3,16 @@
 <% if FirmwareRepository.count > 0 %>
     <form accept-charset="UTF-8" action="/firmware/create" method="post">
         Authentication: <input type="text" name="firmware[authentication]" value="" /> <br>
-        Target project:
-            <select id="firmware[project]" name="repositories" />
+        Target repository:
+            <select id="repositories" name="firmware[project]"/>
                 <%- FirmwareRepository.all.each do |repository| %>
-                    <%- @option = repository.project %>
-                    <option value="<%= @option %>"><%= @option %> (ID: <%= repository.id %>)</option>
+                    <%- 
+                        @doSelect = true if (request.query_parameters["id"].to_i == repository.id)
+                        @repId = repository.id
+                        @repName = repository.project
+                        @selectObject = '' %>
+
+                    <option <%= 'selected' if @doSelect %> value="<%= @repId %>"><%= @repName %> (ID: <%= @repId %>)</option>
                 <%- end %>
             </select><br>
         Version number: <input type="text" name="firmware[version_number]" value="" /> <br>
