@@ -21,7 +21,6 @@ class RepositoryController < ApplicationController
   def delete
     @authCode = "123"
 
-    puts "populating request body"
     @authCodeProvided = JSON.parse(request.body.read)["authentication"]
     puts @authCodeProvided
 

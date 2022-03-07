@@ -1,28 +1,20 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root 'firmwares#index'
 
-  # Generate a new controller: bin/rails generate controller <CTRLName> index --skip-routes
-
-  # Defines the root path route ("/")
-  # root "articles#index"
-
-  root 'firmware#index'
-
-  resource :project
+  resources :firmwares
+  resources :repository, only: [:index, :new]
 
   # GET
-  get "/firmware", to: 'firmware#index'
-  get "/firmware/new", to: 'firmware#new'
+  get "/firmware", to: "firmwares#index"
+  get "/firmware/new", to: "firmwares#new"
 
-  get "/repository", to: "repository#index"
-  get "/repository/new", to: "repository#new"
   get "/repository/:id", to: "repository#manage"
   get "/repository/:id/objects", to: "repository#manage_objects"
 
   # POST
-  post "/firmware/create"
   post "/repository/create"
 
   # DELETE
   delete "/repository/:id", to: "repository#delete"
+  delete "/firmware/:id", to: "firmwares#destroy"
 end

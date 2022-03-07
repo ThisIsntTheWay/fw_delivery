@@ -18,7 +18,13 @@ function crudOperation(operation: string, endpoint: string, value: string) {
             alert("Operation has failed.\n\nFailure reason: " + responseText["message"] + "\nStatus code: " + xhr.status + "");
         } else {
             alert("Operation successful.");
-            window.location = window.origin;
+
+            // Decide what to do next
+            const firstPath = (window.location.pathname).split("/")[1]
+            switch (firstPath) {
+                case "repository": document.location.reload(); break;
+                default: window.location = window.origin;
+            }
         }
     }
 

@@ -1,0 +1,43 @@
+<h1>New firmware for repository</h1>
+<% if !@firmware.errors.empty? %>
+   <div class = "alert alert-error">
+      
+      <ul>
+         <% @firmware.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+         <% end %>
+      </ul>
+      
+   </div>
+<% end %>
+
+<% if FirmwareRepository.count > 0 %>
+    <div class="well">
+       <%= form_for @firmware, html: { multipart: true } do |f| %>
+            Authentication: <input type="text" name="firmware[authentication]" value="" /> <br>
+            <%= f.label :version_number %>
+            <%= f.text_field :version_number %><br>
+            <%= f.label :release_type %>
+            <%= f.text_field :release_type %><br>
+            <%= f.label "Firmware file" %>
+            <%= f.file_field :path_to_bin %><br>
+            Target repository:
+                <select id="repositories" name="firmware[project]"/>
+                    <%- FirmwareRepository.all.each do |repository| %>
+                        <%- 
+                            @doSelect = true if (request.query_parameters["id"].to_i == repository.id)
+                            @repId = repository.id
+                            @repName = repository.project
+                            @selectObject = '' %>
+
+                        <option <%= 'selected' if @doSelect %> value="<%= @repId %>"><%= @repName %> (ID: <%= @repId %>)</option>
+                    <%- end %>
+                </select><br>
+            Publish: <input type="checkbox" id="releaseCheck" name="firmware[for_release]" checked="true"><br>
+            <%= f.submit "Submit", class: "btn btn-primary" %>
+        <% end %>
+    </div>
+<% else %>
+    <b>No firmware repositories have been set up yet.</b><br>
+    <a href="/repository/new">Create new</a>
+<% end %>
