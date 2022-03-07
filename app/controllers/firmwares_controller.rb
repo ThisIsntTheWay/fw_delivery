@@ -1,8 +1,12 @@
-class FirmwareController < ApplicationController
+class FirmwaresController < ApplicationController
   protect_from_forgery with: :null_session
 
   def index
     @paramIngress = params[:project]
+  end
+
+  def new
+    @firmware = Firmware.new
   end
 
   def create
