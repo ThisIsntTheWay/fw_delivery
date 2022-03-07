@@ -19,10 +19,13 @@ class RepositoryController < ApplicationController
   end
 
   def delete
-    @authCodeProvided = if !params[:authentication].nil? then params[:authentication][:text] end
     @authCode = "123"
 
-    if !@authCodeProvided
+    puts "populating request body"
+    @authCodeProvided = JSON.parse(request.body.read)["authentication"]
+    puts @authCodeProvided
+
+    if @authCodeProvided.nil?
       render :json => { :success => false, :message => "Auth code expected." }, status: 403
       return
     elsif @authCodeProvided != @authCode
