@@ -27,6 +27,15 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+# Classier solution for file uploads for Rails, Sinatra and other Ruby web frameworks [https://github.com/carrierwaveuploader/carrierwave]
+gem 'carrierwave', '~> 2.0'
+
+# Bootstrap stuff
+gem 'bootstrap-sass'
+
+# jQuery
+gem 'jquery-rails'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

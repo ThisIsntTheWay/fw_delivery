@@ -3,7 +3,10 @@
   <head>
     <title>Firmware management</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+
     <script type="text/typescript" src="/typescript/global.ts"></script>
+
+    <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,7 +14,9 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container" style="padding-top:20px;">
+        <%= yield %>
+    </div>
   </body>
   <script type="text/javascript" src="/helper/typescript.min.js"></script>
   <script type="text/javascript" src="/helper/typescript.compile.min.js"></script>
