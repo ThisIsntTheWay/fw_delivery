@@ -13,30 +13,37 @@
 
 <% if FirmwareRepository.count > 0 %>
     <div class="well">
-        <form action="/firmware/create" method="post">
-            <div class="form-group">
-                Authentication: <input type="password" class="form-control" name="firmware[authentication]" value="" /> <br>
-                Version number: <input type="text" class="form-control" name="firmware[version_number]" value="" /> <br>
-                Release type: <input type="text"  class="form-control" name="firmware[release_type]" value="" /> <br>
-                Target repository:
-                    <select id="repositories" class="form-control" name="firmware[project]"/>
+        <div class="form-group">
+            <%= form_for @firmware, :multipart => true do |f| %>
+                Authentication: 
+                <%= f.password_field :authentication, placeholder: "Authentication code", class: "form-control" %><br>
+                Version number
+                <%= f.text_field :version_number, placeholder: "Numeric version", class: "form-control" %><br>
+                Release type
+                <%= f.text_field :release_type, placeholder: "alpha / beta / release", class: "form-control" %><br>
+                Target repository
+                    <select id="repositories" class="form-control" name="firmware[firmware_repository_id]"/>
                         <%- FirmwareRepository.all.each do |repository| %>
                             <%- 
                                 @doSelect = true if (request.query_parameters["id"].to_i == repository.id)
                                 @repId = repository.id
                                 @repName = repository.project
-                                @selectObject = '' %>
+                            %>
 
                             <option <%= 'selected' if @doSelect %> value="<%= @repId %>"><%= @repName %> (ID: <%= @repId %>)</option>
                         <%- end %>
                     </select><br>
+                <div class="mb-3">
+                    Firmware binary
+                    <%= f.file_field :path_to_bin, class: "form-control" %><br>
+                </div></p>
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="releaseCheck" name="firmware[for_release]" checked="true">
                     <label class="form-check-label" for="releaseCheck">Publish</label><br>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
-        </form>
+        <% end %>
     </div>
 <% else %>
     <b>No firmware repositories have been set up yet.</b><br>

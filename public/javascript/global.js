@@ -1,7 +1,7 @@
 // VAR Operation: "delete", "update".
 // VAR Endpoint: Endpoint that will be called.
 // VAR Value: Value to pass to endpoint using operation.
-function crudOperation(operation: string, endpoint: string, value: string) {
+function crudOperation(operation, endpoint, value) {
     const newEndpoint = endpoint + "/" + value;
     var xhr = new XMLHttpRequest();
 

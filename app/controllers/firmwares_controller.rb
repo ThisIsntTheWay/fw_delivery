@@ -28,11 +28,11 @@ class FirmwaresController < ApplicationController
     end
 
     # Validate
-    if @paramPOST[:project] == ""
+    if @paramPOST[:firmware_repository_id] == ""
       @postContentIsValid = false
       @responseMsg += "param PROJECT is empty. "
     else
-      @projectID = @paramPOST[:project].to_i
+      @projectID = @paramPOST[:firmware_repository_id].to_i
       if !@projectID
         @postContentIsValid = false
         @responseMsg += "param PROJECT must be a number. "
@@ -59,22 +59,16 @@ class FirmwaresController < ApplicationController
     # Save to database
     @verdict = false
     if @postContentIsValid
-      @forRelease = if @paramPOST[:for_release] == "on" then true else false end
+      #@forRelease = if @paramPOST[:for_release] == "on" then true else false end
 
       @targetRepository = FirmwareRepository.find(@projectID)
       puts @targetRepository.id
       puts "Found repo: #{@projectID.to_s}"
 
-      @result = @targetRepository.firmwares.create(
-        version_number: @paramPOST[:version_number],
-        release_type: @paramPOST[:release_type],
-        for_release: @forRelease,
-        is_hidden: false
-      )
-
-      if @result
+      @firmwareCreation = @targetRepository.firmwares.new(post_params)
+      if @firmwareCreation.save
         @verdict = true
-        @responseMsg = "Firmware registered. ID: #{@result.id}"
+        @responseMsg = "Firmware registered."
       else
         @responseMsg = "Failure during firmware registration."
       end
@@ -131,7 +125,8 @@ class FirmwaresController < ApplicationController
   end
 
   private
-    def firmware_params
-    params.require(:firmware).permit(:name, :attachment)
+
+  def post_params
+    params.require(:firmware).permit(:name, :version_number, :release_type, :firmware_repository_id, :path_to_bin, :for_release)
   end
 end
