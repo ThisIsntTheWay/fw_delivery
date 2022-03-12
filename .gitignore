@@ -29,7 +29,9 @@
 !/tmp/storage/
 !/tmp/storage/.keep
 
+# Certain public folders
 /public/assets
+public/uploads
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
