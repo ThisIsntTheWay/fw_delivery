@@ -7,6 +7,6 @@
 <b>ID:</b> <%= @repository.id %>
 
 <p><h3>Actions:</h3><p>
-<a href="#" onClick="crudOperation('delete', 'repository', <%= @repository.id %>)">Delete</a><br>
 <a href="/firmware/new?id=<%= @repository.id %>">Add firmware</a><br>
-<a href="/repository/<%= @repository.id %>/objects">List firmware objects</a><br>
+<a href="/repository/<%= @repository.id %>/objects">List firmware objects</a></p>
+<button type="button" class="btn btn-danger" onClick="crudOperation('delete', 'repository', <%= @repository.id %>)">Delete</button>

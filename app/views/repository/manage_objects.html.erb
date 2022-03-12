@@ -1,5 +1,5 @@
 <h1>Repository firmware management</h1>
-Currently managing firmware objets for repository <b><%= @repository.project %></b>:<br>
+Currently managing firmware objects for repository <b><%= @repository.project %></b>:<br>
 <%  @i = 0
     @repository.firmwares.each do |firmware| %>
         <% @i += 1 %>
@@ -9,7 +9,7 @@ Currently managing firmware objets for repository <b><%= @repository.project %><
                 <dd><b>Release type:</b> <%= firmware.release_type %></dd>
                 <dd><b>For release:</b> <%= ActiveModel::Type::Boolean.new.cast(firmware.for_release) %></dd>
                 <dd><b>Indexed:</b> <%= firmware.created_at %></dd>
-                <dd><a href="#" onClick="crudOperation('delete', 'firmware', <%= firmware.id %>)">Delete</a></dd>
+                <dd><button type="button" class="btn btn-danger" onClick="crudOperation('delete', 'firmware', <%= firmware.id %>)">Delete</button></dd>
             </dt>
         </dl>
 <% end %>

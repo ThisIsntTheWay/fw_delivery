@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   # POST
   post "/repository/create"
+  post "/firmware/create", to: "firmwares#create"
 
   # DELETE
   delete "/repository/:id", to: "repository#delete"

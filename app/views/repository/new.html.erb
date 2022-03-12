@@ -1,8 +1,10 @@
 <h1>New repository</h1>
 
 <form accept-charset="UTF-8" action="/repository/create" method="post">
-    Authentication: <input type="text" name="repository[authentication]" value="" /> <br>
-    Project name: <input type="text" name="repository[project_name]" value="" /> <br>
-    Project description: <input type="text" name="repository[description]" value="" /> <br>
-    <input type="submit">
+    <div class="form-group">
+        Authentication: <input type="password" class="form-control" name="repository[authentication]" value="" /> <br>
+        Project name: <input type="text" class="form-control" name="repository[project_name]" value="" /> <br>
+        Project description: <input type="text"  class="form-control" name="repository[description]" value="" /> <br>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
 </form>

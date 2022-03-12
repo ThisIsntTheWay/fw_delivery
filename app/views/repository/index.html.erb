@@ -4,13 +4,12 @@
     Current repositories (<%= FirmwareRepository.count %>): <p/>
     <ul style="list-style-type: circle">
         <% FirmwareRepository.all.each do |repository|
-            puts repository
             @firmwareObjects = repository.firmwares.count %>
             <li><a href="/repository/<%= repository.id %>"><%= repository.project %></a> (ID: <%= repository.id %>, Objects: <%= @firmwareObjects %>)</li>
         <% end %>
     </ul>
-    <a href="/repository/new">Create new</a>
+    <a href="/repository/new" class="btn btn-primary">Create new</a>
 <% else %>
     <b>No firmware repositories have been set up yet.</b><br>
-    <a href="/repository/new">Create new</a>
+    <a href="/repository/new" class="btn btn-primary">Create new</a>
 <% end %>
